@@ -150,7 +150,6 @@ void delete_oldest() {
         }
         fl_oldestDirFound = true;
         Serial.printf("Oldest directory: name is '%s', number is '%d'\n", oldestDir, oldest);
-        //deleteFolderOrFile(oldestDir);
         f.close();
       }
     }
@@ -215,46 +214,6 @@ void deleteFileInDir(const char * val) {
       else {
         Serial.println("Dir not removed - there are stiil files here or error");
       }
-    }
-  }
-}
-
-
-void deleteFolderOrFile(const char * val) {
-  // Function provided by user @gemi254
-  Serial.printf("Deleting : %s\n", val);
-  File f = SD_MMC.open(val);
-  if (!f) {
-    Serial.printf("Failed to open %s\n during deleting", val);
-    return;
-  }
-
-  if (f.isDirectory()) {  
-    File file = f.openNextFile();
-    while (file) {
-      if (!file.isDirectory()) {
-        if (SD_MMC.remove(file.name())) {
-          Serial.println(" deleted.");
-        } else {
-          Serial.println(" FAILED.");
-        }
-      }
-      file = f.openNextFile();
-    }
-    f.close();
-    //Remove the dir
-    if (SD_MMC.rmdir(val)) {
-      Serial.printf("Dir %s removed\n", val);
-    } else {
-      Serial.println("Remove dir failed");
-    }
-  }
-  else {
-    //Remove the file
-    if (SD_MMC.remove(val)) {
-      Serial.printf("File %s deleted\n", val);
-    } else {
-      Serial.println("Delete failed");
     }
   }
 }
