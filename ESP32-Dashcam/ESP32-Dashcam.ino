@@ -35,12 +35,12 @@
 #define AUTOSTART_REC			1
 #define DEFAULT_FRAMESIZE 		FRAMESIZE_SVGA	// initial framesize of video rec and streaming
 #define DEVICE_NAME				"SKYNET.EYE001"
-#define AVILENGTH				300				// how long a movie in seconds -- 1800 sec = 30 min
+#define AVILENGTH				300				// sec. Files larger than 4Gb can not be stored on a FAT32 volume. To be sure, assume 1 sec = 375 kB
 
 static const char devname[] = DEVICE_NAME;		// name of camera - frefix for filenames
 String 		ESP_SSID = "ESP_" + String(WIFI_getChipId(), HEX);
 const char* ESP_PWD = "12345678";
-uint8_t esp_in_mode = 2;	//0 - client, 1 - AP;
+uint8_t esp_in_mode = 2;	//0 - client, 1 - AP, 2 - not defined;
 
 uint8_t framesize;
 uint8_t quality;			// quality on the 1..63 scale  - lower is better quality and bigger files - must be higher than the jpeg_quality in camera_config
@@ -334,7 +334,7 @@ static esp_err_t start_avi() {	// start_avi - open the files and write in header
   }
 
   size_t err = fwrite(buf, 1, AVIOFFSET, avifile);
-  //? может можно извлеть размеры кадра из названий разрешений FRAMESIZE_XXX
+  //? может можно извлечь размеры кадра из названий разрешений FRAMESIZE_XXX
   if (framesize == 10) {		// uxga
     fseek(avifile, 0x40, SEEK_SET);
     err = fwrite(uxga_w, 1, 2, avifile);
@@ -729,7 +729,7 @@ void setup() {
   //digitalWrite(LED_RED, LED_ON);
   WiFiManager wifiManager;
   wifiManager.setDebugOutput(true);
-  wifiManager.setTimeout(WIFIMGR_TIMEOUT); //in seconds
+  wifiManager.setConfigPortalTimeout(WIFIMGR_TIMEOUT); //in seconds
   IPAddress cameraIP;
   
   //if (digitalRead(BTN_PIN)) wifiManager.resetSettings();
