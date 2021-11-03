@@ -891,5 +891,5 @@ void loop() {
     }
   }
 
-  if (esp_in_mode = 0) check_connection(); //if connected to Wi-Fi point  
+  if (esp_in_mode == 0) check_connection(); //if connected to Wi-Fi point  
 }
