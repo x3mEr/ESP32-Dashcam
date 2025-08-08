@@ -1,6 +1,6 @@
 ## ESP32-DASHCAM
 
-Dashcam with Wi-Fi streaming...
+Dashcam with Wi-Fi streaming.
 Based on `ESP32 CameraWebServer` example in Arduino.
 Inspired by (some ideas or/and code are taken from):
 	[jameszah's ESP32-CAM-Video-Recorder-junior](https://github.com/jameszah/ESP32-CAM-Video-Recorder-junior),
